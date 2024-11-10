@@ -1,0 +1,6 @@
+# Binance API base URL
+binance:
+  api:
+    url: "https://fapi.binance.com"
+server:
+  port: 443
