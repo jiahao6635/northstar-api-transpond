@@ -28,9 +28,10 @@ public class ApiProxyController {
     // 接收查询参数 path 作为目标路径
     @RequestMapping(value = "", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
     public String getBinanceApiData(@RequestParam String path, @RequestParam Map<String, String> allParams) {
-        // 构造完整的 URL
-        String url = "https://fapi.binance.com/" + path;
-
+        // 构造基础URL，根据 path 选择正确的URL前缀
+        String baseUrl = path.startsWith("fapi") ? "https://fapi.binance.com/" : "https://api.binance.com/";
+        String url = baseUrl + path;
+        allParams.remove("path");
         // 返回接口的响应体
         return restTemplate.getForObject(buildUrlWithParams(url, allParams), String.class);
     }
